@@ -1,0 +1,5 @@
+Roght Joy-Con
+R_UD	Tilt up-down	3	SLIDER	Slider	0	1.0	0.0
+R_IO	Tilt in-out	3	SLIDER	Dial	0	1.0	0.0
+R_LR	Tilt left-right	3	SLIDER	Z Rotation	0	1.0	0.0
+R_BTN	Joystick center	1	BUTTON	Button 10	0	0.0	0.0
