@@ -3,3 +3,5 @@ L_UD	Tilt up-down	3	SLIDER	Slider	0	1.0	0.0
 L_IO	Tilt in-out	3	SLIDER	Dial	0	1.0	0.0
 L_LR	Tilt left-right	3	SLIDER	Z Rotation	0	1.0	0.0
 L_BTN	Joystick center	1	BUTTON	Button 11	0	0.0	0.0
+L_B_B	Back bottom	1	BUTTON	Button 7	0	0.0	0.0
+L_D_U	Pad up	1	BUTTON	Button 1	0	0.0	0.0

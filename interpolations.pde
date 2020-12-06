@@ -1,3 +1,5 @@
+// Interpolation functions
+
 float decasteljau_bicubic(float x, float y, float[] pts) {
   float b0, b1, b2;
   float[] t = new float[4];
