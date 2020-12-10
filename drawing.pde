@@ -52,7 +52,7 @@ void draw_gesture() {
     case POSITION:
       if (p_up_prs && !up_prs) {
         canvas.beginDraw();
-        canvas.image(figure.copy(), -pos_x * width/2, pos_y * height/2);
+        canvas.image(figure.copy(), int(-pos_x * width/2), int(pos_y * height/2));
         canvas.endDraw();
         figure.beginDraw();
         figure.background(0, 0);

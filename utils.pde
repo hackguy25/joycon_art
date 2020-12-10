@@ -37,14 +37,3 @@ void get_inputs() {
   p_up_prs = up_prs;
   up_prs = joy_l.getButton("L_D_U").pressed();
 }
-
-void update_state() {
-  switch(state) {
-    case IDLE:
-      
-    case DRAW:
-      
-    case POSITION:
-      
-  }
-}
