@@ -5,7 +5,7 @@ void draw_cursor() {
   cursor.background(0, 0);
   cursor.translate((1 - pos_x) * width/2, (1 + pos_y) * height/2);
   cursor.rotate(2 * pos_z);
-  if (back_pressed) {
+  if (conf_prs) {
     cursor.fill(0x66ff8888);
   } else {
     cursor.fill(0x668888ff);
@@ -13,7 +13,7 @@ void draw_cursor() {
   cursor.triangle(0, -15, 6, 6, -6, 6);
   cursor.endDraw();
   
-  if (back_pressed) {
+  if (conf_prs) {
     canvas.beginDraw();
     canvas.image(cursor, 0, 0);
     canvas.endDraw();
@@ -27,32 +27,56 @@ void draw_cursor() {
 void draw_gesture() {
   switch(state) {
     case IDLE:
-      if (p_up_prs && !up_prs) {
+      if (p_conf_prs && !conf_prs) {
         reset_pos();
         gesture_inputs = new ArrayList<PVector>();
         state = DrawState.DRAW;
         println("IDLE -> DRAW");
       }
+      if (p_canc_prs && !canc_prs) {
+        state = DrawState.MENU;
+        menu_position = 0;
+        menu_selected = false;
+        println("IDLE -> MENU");
+      }
       image(canvas, 0, 0);
       break;
+    case MENU:
+      processMenuInputs();
+      image(canvas, 0, 0);
+      drawMenu();
+      break;
     case DRAW:
-      if (p_up_prs && !up_prs) {
+      if (p_reset_prs && !reset_prs) {
+        gesture_inputs = new ArrayList<PVector>();
+      }
+      if (p_conf_prs && !conf_prs) {
         reset_pos();
         state = DrawState.POSITION;
         println("DRAW -> POSITION");
         image(canvas, 0, 0);
-        image(figure, -pos_x * width/2, pos_y * height/2);
+        image(figure, -width/2, -height/2);
         break;
       }
-      gesture_inputs.add(new PVector(pos_x * width/2, pos_y * height/2, pos_z));
-      bubbles();
+      if (p_canc_prs && !canc_prs) {
+        reset_pos();
+        state = DrawState.IDLE;
+        println("DRAW -> IDLE");
+        figure.beginDraw();
+        figure.background(0, 0);
+        figure.endDraw();
+        image(canvas, 0, 0);
+        break;
+      }
+      gesture_inputs.add(new PVector(pos_x * 500, pos_y * 500, pos_z));
+      drawSelectedGesture();
       image(canvas, 0, 0);
-      image(figure, 0, 0);
+      image(figure, -width/2, -height/2);
       break;
     case POSITION:
-      if (p_up_prs && !up_prs) {
+      if (p_conf_prs && !conf_prs) {
         canvas.beginDraw();
-        canvas.image(figure.copy(), int(-pos_x * width/2), int(pos_y * height/2));
+        canvas.image(figure.copy(), int((-pos_x - 1) * width/2), int((pos_y - 1) * height/2));
         canvas.endDraw();
         figure.beginDraw();
         figure.background(0, 0);
@@ -62,8 +86,18 @@ void draw_gesture() {
         image(canvas, 0, 0);
         break;
       }
+      if (p_canc_prs && !canc_prs) {
+        reset_pos();
+        state = DrawState.IDLE;
+        println("POSITION -> IDLE");
+        figure.beginDraw();
+        figure.background(0, 0);
+        figure.endDraw();
+        image(canvas, 0, 0);
+        break;
+      }
       image(canvas, 0, 0);
-      image(figure, -pos_x * width/2, pos_y * height/2);
+      image(figure, int((-pos_x - 1) * width/2), int((pos_y - 1) * height/2));
       break;
   }
 }

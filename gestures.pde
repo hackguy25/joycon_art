@@ -19,13 +19,35 @@ void bubbles() {
       point.add(first.x, first.y);
       
       float r = min_dist * 0.5;
-      r *= 100 * abs(last.z - first.z) + 1;
+      r *= abs(last.z - first.z);
+      r = 1 - exp(-(r+0.05));
+      r = r * 100 + 1; 
       
-      figure.circle(-point.x + width / 2, point.y + height / 2, r);
+      // r < 10 => fill
+      // r = 10 => 50% chance fill
+      if (r >= 10 && random(1) > exp(-(r - 10) * 0.06931471)) {
+        // stroke only
+        figure.fill(palette[0]);
+        figure.stroke(palette[int(random(1, palette.length))]);
+        figure.strokeWeight(1 + r/20);
+      } else {
+        // fill only
+        figure.fill(palette[int(random(1, palette.length))]);
+        figure.noStroke();
+      }
+      figure.circle(-point.x + width, point.y + height, r);
     }
     figure.endDraw();
     
     gesture_inputs.clear();
     gesture_inputs.add(last);
+  }
+}
+
+void drawSelectedGesture() {
+  switch (selectedGesture) {
+    case BUBBLES:
+      bubbles();
+      break;
   }
 }
