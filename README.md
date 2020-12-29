@@ -1,6 +1,10 @@
 # Joy-Con art generator
 
-TODO
+`TODO` razlaga/opis
+
+## Meni
+
+## Risanje
 
 ## Pairanje Joy-Con-ov
 

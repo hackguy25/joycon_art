@@ -59,6 +59,18 @@ void smooth_naive(ArrayList<PVector> points, float factor) {
   }
 }
 
+void smooth_wider(ArrayList<PVector> points, float factor) {
+  for (int i = points.size() - 3; i > 1; i--) {
+    PVector temp = points.get(i-2).copy();
+    temp.add(points.get(i+2));
+    temp.sub(PVector.mult(points.get(i-1), 3));
+    temp.sub(PVector.mult(points.get(i+1), 3));
+    temp.sub(PVector.mult(points.get(i), 2));
+    temp.mult(factor / 10);
+    points.get(i).add(temp);
+  }
+}
+
 // Pruning functions
 
 float prune_by_distance(ArrayList<PVector> points, float min_dist) {

@@ -79,14 +79,22 @@ void waves() {
     center_line.remove(0);
   
   for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
-    prune_by_distance(to_draw[i], 3 * line_width);
     chaikin(to_draw[i]);
     chaikin(to_draw[i]);
-    int pruneOffset = int(random(10));
+    chaikin(to_draw[i]);
+    prune_by_distance(to_draw[i], line_width);
+    smooth_naive(to_draw[i], 0.5);
+    prune_by_distance(to_draw[i], line_width);
+    smooth_naive(to_draw[i], 0.5);
+    chaikin(to_draw[i]);
+    chaikin(to_draw[i]);
+    chaikin(to_draw[i]);
+    prune_by_distance(to_draw[i], 1.5 * line_width);
+    int pruneOffset = int(25 * noise(i, millis() / 250.));
     for (int j = 0; j < pruneOffset; j++)
       if (to_draw[i].size() > 0)
         to_draw[i].remove(0);
-    pruneOffset = int(random(12));
+    pruneOffset = int(25 * noise(i, millis() / 250.));
     for (int j = 0; j < pruneOffset; j++)
       if (to_draw[i].size() > 0)
         to_draw[i].remove(to_draw[i].size() - 1);
@@ -95,6 +103,7 @@ void waves() {
   figure.beginDraw();
   figure.background(0, 0);
   
+  /*
   figure.noFill();
   figure.strokeWeight(line_width + 2 * line_margin);
   figure.stroke(palette[0]);
@@ -118,6 +127,22 @@ void waves() {
       figure.vertex(-point.x + width, point.y + height);
     }
     figure.endShape();
+  }
+  */
+  
+  figure.noFill();
+  for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+    for (int j = 2; j < to_draw[i].size(); j++) {
+      figure.strokeWeight(line_width + 2 * line_margin);
+      figure.stroke(palette[0]);
+      figure.line(-to_draw[i].get(j-1).x + width, to_draw[i].get(j-1).y + height,
+        -to_draw[i].get(j).x + width, to_draw[i].get(j).y + height);
+      
+      figure.strokeWeight(line_width);
+      figure.stroke(waves_colors[i]);
+      figure.line(-to_draw[i].get(j-2).x + width, to_draw[i].get(j-2).y + height,
+        -to_draw[i].get(j-1).x + width, to_draw[i].get(j-1).y + height);
+    }
   }
   
   figure.endDraw();
