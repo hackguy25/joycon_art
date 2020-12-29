@@ -3,12 +3,12 @@ import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;
 
 void setup() {
-  //size(1000, 1000);
-  fullScreen();
+  size(1000, 1000);
+  //fullScreen();
   //mode = DrawMode.CURSOR;
   mode = DrawMode.GESTURE;
   state = DrawState.MENU;
-  selectedGesture = Gesture.BUBBLES;
+  selectedGesture = Gesture.WAVES;
   
   // Initialise the ControlIO
   control = ControlIO.getInstance(this);

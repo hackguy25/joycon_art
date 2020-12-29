@@ -44,10 +44,99 @@ void bubbles() {
   }
 }
 
+void waves() {
+  float min_dist = 1500;
+  float max_dist = 1600;
+  float line_width = 8;
+  float line_margin = 6;
+  
+  ArrayList<PVector> to_draw[] = new ArrayList[2 * waves_num_lines_per_side + 1];
+  for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++)
+    to_draw[i] = new ArrayList<PVector>();
+  ArrayList<PVector> center_line = to_draw[waves_num_lines_per_side];
+
+  float dist = prune_and_center_by_distance(gesture_inputs, center_line, line_width);
+  smooth_naive(center_line, 0.5);
+  prune_by_distance(center_line, 3 * line_width);
+  smooth_naive(center_line, 0.5);
+  chaikin(center_line);
+  chaikin(center_line);
+  
+  for (int i = 1; i < center_line.size() - 1; i++) {
+    PVector delta = PVector.sub(center_line.get(i+1), center_line.get(i-1));
+    PVector orth = new PVector(delta.y, -delta.x);
+    orth.normalize();
+    for (int j = 1; j <= waves_num_lines_per_side; j++) {
+      PVector disp = PVector.mult(orth, j * 2 * line_width);
+      PVector base = center_line.get(i);
+      to_draw[waves_num_lines_per_side + j].add(PVector.add(base, disp));
+      to_draw[waves_num_lines_per_side - j].add(PVector.sub(base, disp));
+    }
+  }
+  
+  center_line.remove(center_line.size() - 1);
+  if (center_line.size() > 0)
+    center_line.remove(0);
+  
+  for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+    prune_by_distance(to_draw[i], 3 * line_width);
+    chaikin(to_draw[i]);
+    chaikin(to_draw[i]);
+    int pruneOffset = int(random(10));
+    for (int j = 0; j < pruneOffset; j++)
+      if (to_draw[i].size() > 0)
+        to_draw[i].remove(0);
+    pruneOffset = int(random(12));
+    for (int j = 0; j < pruneOffset; j++)
+      if (to_draw[i].size() > 0)
+        to_draw[i].remove(to_draw[i].size() - 1);
+  }
+  
+  figure.beginDraw();
+  figure.background(0, 0);
+  
+  figure.noFill();
+  figure.strokeWeight(line_width + 2 * line_margin);
+  figure.stroke(palette[0]);
+  
+  for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+    figure.beginShape();
+    for (PVector point : to_draw[i]) {
+      figure.vertex(-point.x + width, point.y + height);
+    }
+    figure.endShape();
+  }
+  
+  //figure.stroke(palette[int(random(1, palette.length))]);
+  //figure.stroke(palette[1]);
+  figure.strokeWeight(line_width);
+  
+  for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+    figure.stroke(waves_colors[i]);
+    figure.beginShape();
+    for (PVector point : to_draw[i]) {
+      figure.vertex(-point.x + width, point.y + height);
+    }
+    figure.endShape();
+  }
+  
+  figure.endDraw();
+  
+  if (dist > min_dist) {
+    gesture_inputs.remove(0);
+  }
+  if (dist > max_dist) {
+    gesture_inputs.remove(0);
+  }
+}
+
 void drawSelectedGesture() {
   switch (selectedGesture) {
     case BUBBLES:
       bubbles();
+      break;
+    case WAVES:
+      waves();
       break;
   }
 }

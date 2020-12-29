@@ -38,7 +38,16 @@ enum DrawMode {
 }
 DrawMode mode;
 enum Gesture {
-  BUBBLES
+  BUBBLES,
+  WAVES;
+  
+  private static Gesture[] vals = values();
+  public Gesture next() {
+    return vals[(this.ordinal() + 1) % vals.length];
+  }
+  public Gesture prev() {
+    return vals[(this.ordinal() + vals.length - 1) % vals.length];
+  }
 }
 Gesture selectedGesture;
 
@@ -59,4 +68,6 @@ boolean menu_selected;
 PFont menu_font;
 String menu_override_text;
 
-// fonts
+// gesture stuff
+int waves_num_lines_per_side = 3;
+color waves_colors[];

@@ -51,6 +51,14 @@ void get_inputs() {
   pos_z += mult * spd_z;
 }
 
+String save_current_canvas() {
+  background(palette[0]);
+  image(canvas, 0, 0);
+  String fname = "saves/" + year() + "-" + month() + "-" + day() + "_" + hour() + "-" + minute() + "-" + second() + ".png";
+  save(fname);
+  return fname;
+} 
+
 void debug_framerate() {
   textAlign(LEFT, BASELINE);
   textFont(menu_font, 15);

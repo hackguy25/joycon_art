@@ -31,16 +31,18 @@ void drawMenuItem(boolean selected, String name, float y_pos) {
 void processMenuInputs() {
   if (menu_selected) {
     if (p_conf_prs && !conf_prs) {
-      println("ouki");
       menu_selected = false;
     } else if (p_prev_prs && !prev_prs) {
       switch (menu_position) {
         case 1:
-          // TODO
+          selectedGesture = selectedGesture.next();
+          menu_override_text = selectedGesture.toString();
+          println("gesta: " + menu_override_text);
           break;
         case 2:
           paletteNum += palettes.length - 1;
           paletteNum %= palettes.length;
+          println("palette: ", paletteNum + 1);
           palette = palettes[paletteNum];
           menu_override_text = Integer.toString(paletteNum + 1);
           break;
@@ -48,17 +50,19 @@ void processMenuInputs() {
     } else if (p_next_prs && !next_prs) {
       switch (menu_position) {
         case 1:
-          // TODO
+          selectedGesture = selectedGesture.next();
+          menu_override_text = selectedGesture.toString();
+          println("gesta: " + menu_override_text);
           break;
         case 2:
           paletteNum += 1;
           paletteNum %= palettes.length;
+          println("palette: ", paletteNum + 1);
           palette = palettes[paletteNum];
           menu_override_text = Integer.toString(paletteNum + 1);
           break;
       }
     } else if (p_canc_prs && !canc_prs) {
-      println("nah");
       menu_selected = false;
     }
   } else {
@@ -81,6 +85,9 @@ void processMenuInputs() {
           break;
         case 3:
           println("shrani umetnino");
+          menu_override_text = "SHRANJENO";
+          String save_name = save_current_canvas();
+          println(" -> " + save_name);
           menu_selected = true;
           break;
         case 4:

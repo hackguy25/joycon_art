@@ -25,3 +25,82 @@ float decasteljau_bicubic(float x, float y, float[] pts) {
   
   return y_1 * t[0] + y * t[1];
 }
+
+// Subdivision functions
+
+void chaikin(ArrayList<PVector> points) {
+  int len = points.size();
+  if (len < 2)
+    return;
+  for (int i = 1; i < len; i++) {
+    PVector p0 = points.get(0).copy().div(4);
+    PVector p1 = points.get(1).copy().div(4);
+    PVector t0 = p0.copy().mult(3);
+    PVector t1 = p1.copy().mult(3);
+    t0.add(p1);
+    t1.add(p0);
+    points.add(t0);
+    points.add(t1);
+    points.remove(0);
+  }
+  points.remove(0);
+}
+
+// Smoothing functions
+
+void smooth_naive(ArrayList<PVector> points, float factor) {
+  for (int i = points.size() - 2; i > 0; i--) {
+    PVector temp = points.get(i-1).copy();
+    temp.add(points.get(i+1));
+    temp.sub(points.get(i));
+    temp.sub(points.get(i));
+    temp.mult(factor / 2);
+    points.get(i).add(temp);
+  }
+}
+
+// Pruning functions
+
+float prune_by_distance(ArrayList<PVector> points, float min_dist) {
+  int i = points.size() - 2;
+  float total_dist = 0;
+  while (i >= 0) {
+    PVector temp = PVector.sub(points.get(i), points.get(i+1));
+    temp.z = 0;
+    float mag = temp.mag();
+    if (mag < min_dist) {
+      points.remove(i);
+    } else {
+      total_dist += mag;
+    }
+    i--;
+  }
+  return total_dist;
+}
+
+float prune_and_center_by_distance(ArrayList<PVector> points, ArrayList<PVector> target, float min_dist) {
+  int i = points.size() - 2;
+  float total_dist = 0;
+  PVector center = points.get(i+1).copy();
+  while (i >= 0) {
+    PVector temp = PVector.sub(points.get(i), points.get(i+1));
+    temp.z = 0;
+    float mag = temp.mag();
+    if (mag < min_dist) {
+      points.remove(i);
+    } else {
+      total_dist += mag;
+      center.add(points.get(i));
+    }
+    i--;
+  }
+  center.div(points.size());
+  //for (i = 0; i < points.size(); i++) {
+  //  points.set(i, points.get(i).sub(center));
+  //}
+  target.clear();
+  for (PVector point : points) {
+    target.add(PVector.sub(point, center));
+  }
+  return total_dist;
+}

@@ -30,6 +30,12 @@ void draw_gesture() {
       if (p_conf_prs && !conf_prs) {
         reset_pos();
         gesture_inputs = new ArrayList<PVector>();
+        if (selectedGesture == Gesture.WAVES) {
+          waves_colors = new color[2 * waves_num_lines_per_side + 1];
+          for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+            waves_colors[i] = palette[int(random(1, palette.length))];
+          }
+        }
         state = DrawState.DRAW;
         println("IDLE -> DRAW");
       }
@@ -67,6 +73,24 @@ void draw_gesture() {
         figure.endDraw();
         image(canvas, 0, 0);
         break;
+      }
+      if (p_prev_prs && !prev_prs) {
+        if (selectedGesture == Gesture.WAVES && waves_num_lines_per_side > 1) {
+          waves_num_lines_per_side -= 1;
+          waves_colors = new color[2 * waves_num_lines_per_side + 1];
+          for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+            waves_colors[i] = palette[int(random(1, palette.length))];
+          }
+        }
+      }
+      if (p_next_prs && !next_prs) {
+        if (selectedGesture == Gesture.WAVES) {
+          waves_num_lines_per_side += 1;
+          waves_colors = new color[2 * waves_num_lines_per_side + 1];
+          for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
+            waves_colors[i] = palette[int(random(1, palette.length))];
+          }
+        }
       }
       gesture_inputs.add(new PVector(pos_x * 500, pos_y * 500, pos_z));
       drawSelectedGesture();
