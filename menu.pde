@@ -13,6 +13,10 @@ void drawMenu() {
   drawMenuItem(menu_position == 2, "PALETA", 250);
   drawMenuItem(menu_position == 3, "SHRANI", 300);
   drawMenuItem(menu_position == 4,  "IZHOD", 350);
+  
+  if (menu_selected && menu_position == 2) {
+    drawPalette();
+  }
 }
 
 void drawMenuItem(boolean selected, String name, float y_pos) {
@@ -28,6 +32,22 @@ void drawMenuItem(boolean selected, String name, float y_pos) {
   }
 }
 
+void drawPalette() {
+  noStroke();
+  
+  fill(palette[1]);
+  rect(width / 2 - 200, 450, 100, 75);
+  
+  fill(palette[2]);
+  rect(width / 2 - 100, 450, 100, 75);
+  
+  fill(palette[3]);
+  rect(width / 2,       450, 100, 75);
+  
+  fill(palette[4]);
+  rect(width / 2 + 100, 450, 101, 75);
+}
+
 void processMenuInputs() {
   if (menu_selected) {
     if (p_conf_prs && !conf_prs) {
@@ -35,7 +55,7 @@ void processMenuInputs() {
     } else if (p_prev_prs && !prev_prs) {
       switch (menu_position) {
         case 1:
-          selectedGesture = selectedGesture.next();
+          selectedGesture = selectedGesture.prev();
           menu_override_text = selectedGesture.toString();
           println("gesta: " + menu_override_text);
           break;

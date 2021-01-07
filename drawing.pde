@@ -30,7 +30,7 @@ void draw_gesture() {
       if (p_conf_prs && !conf_prs) {
         reset_pos();
         gesture_inputs = new ArrayList<PVector>();
-        if (selectedGesture == Gesture.WAVES) {
+        if (selectedGesture == Gesture.WAVES || selectedGesture == Gesture.WAVES_2) {
           waves_colors = new color[2 * waves_num_lines_per_side + 1];
           for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
             waves_colors[i] = palette[int(random(1, palette.length))];
@@ -75,7 +75,7 @@ void draw_gesture() {
         break;
       }
       if (p_prev_prs && !prev_prs) {
-        if (selectedGesture == Gesture.WAVES && waves_num_lines_per_side > 1) {
+        if ((selectedGesture == Gesture.WAVES || selectedGesture == Gesture.WAVES_2) && waves_num_lines_per_side > 1) {
           waves_num_lines_per_side -= 1;
           waves_colors = new color[2 * waves_num_lines_per_side + 1];
           for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {
@@ -84,7 +84,7 @@ void draw_gesture() {
         }
       }
       if (p_next_prs && !next_prs) {
-        if (selectedGesture == Gesture.WAVES) {
+        if (selectedGesture == Gesture.WAVES || selectedGesture == Gesture.WAVES_2) {
           waves_num_lines_per_side += 1;
           waves_colors = new color[2 * waves_num_lines_per_side + 1];
           for (int i = 0; i < 2 * waves_num_lines_per_side + 1; i++) {

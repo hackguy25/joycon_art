@@ -39,6 +39,9 @@ void setup() {
   canvas.endDraw();
   
   frameRate(60);
+  
+  println(1.5 % 2);
+  println(-1.5 % 2);
 }
 
 void draw() {

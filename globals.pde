@@ -39,7 +39,9 @@ enum DrawMode {
 DrawMode mode;
 enum Gesture {
   BUBBLES,
-  WAVES;
+  BUBBLES_2,
+  WAVES,
+  WAVES_2;
   
   private static Gesture[] vals = values();
   public Gesture next() {

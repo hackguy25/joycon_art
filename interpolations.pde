@@ -116,3 +116,34 @@ float prune_and_center_by_distance(ArrayList<PVector> points, ArrayList<PVector>
   }
   return total_dist;
 }
+
+float prune_and_center_at_head(ArrayList<PVector> points, ArrayList<PVector> target, float min_dist) {
+  int i = points.size() - 2;
+  int added = 1;
+  float total_dist = 0;
+  PVector center = points.get(i+1).copy();
+  while (i >= 0) {
+    PVector temp = PVector.sub(points.get(i), points.get(i+1));
+    temp.z = 0;
+    float mag = temp.mag();
+    if (mag < min_dist) {
+      points.remove(i);
+    } else {
+      total_dist += mag;
+      if (total_dist < 20 * min_dist) {
+        center.add(points.get(i));
+        added++;
+      }
+    }
+    i--;
+  }
+  center.div(added);
+  //for (i = 0; i < points.size(); i++) {
+  //  points.set(i, points.get(i).sub(center));
+  //}
+  target.clear();
+  for (PVector point : points) {
+    target.add(PVector.sub(point, center));
+  }
+  return total_dist;
+}
