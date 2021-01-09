@@ -1,10 +1,10 @@
 Left Joy-Con
-L_UD	Tilt front-back	3	SLIDER	Slider	0	1.0	0.0
-L_IO	Tilt left-right	3	SLIDER	Dial	0	1.0	0.0
-L_LR	Twist	3	SLIDER	Z Rotation	0	1.0	0.0
-L_B_T	Reset position	1	BUTTON	Button 6	0	0.0	0.0
-L_B_B	Freeze position	1	BUTTON	Button 7	0	0.0	0.0
-L_D_U	Confirm	1	BUTTON	Button 1	0	0.0	0.0
-L_D_L	Previous choice	1	BUTTON	Button 3	0	0.0	0.0
-L_D_R	Next choice	1	BUTTON	Button 2	0	0.0	0.0
-L_D_D	Cancel	1	BUTTON	Button 0	0	0.0	0.0
+L_UD	Nagib naprej-nazaj	3	SLIDER	Slider	0	1.0	0.0
+L_IO	Nagib levo-desno	3	SLIDER	Dial	0	1.0	0.0
+L_LR	Vrtenje zapestja	3	SLIDER	Z Rotation	0	1.0	0.0
+L_B_T	Ponastavi položaj	1	BUTTON	Button 6	0	0.0	0.0
+L_B_B	Zamrzni položaj	1	BUTTON	Button 7	0	0.0	0.0
+L_D_U	Potrdi	1	BUTTON	Button 1	0	0.0	0.0
+L_D_L	Nazaj	1	BUTTON	Button 3	0	0.0	0.0
+L_D_R	Naprej	1	BUTTON	Button 2	0	0.0	0.0
+L_D_D	Prekliči	1	BUTTON	Button 0	0	0.0	0.0

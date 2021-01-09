@@ -1,19 +1,8 @@
-# Joy-Con art generator
+# Generativna umetnost na podlagi premikanja krmilnika za igre
 
-`TODO` razlaga/opis
+## Zagon
 
-## Meni
-
-## Risanje
-
-## Pairanje Joy-Con-ov
-
-- vklopi Bluetooth
-- odstrani v nastavitvah
-- dodaj napravo
-- bluetooth
-- pritisni in pridrži gumb na notranjem delu joycona
-- klikni ustrezni vnos
-- vklopi `joycon_driver`
-- pritisni start
-
+- priključi krmilnik v osebni računalnik
+- zaženi `joycon_art.pde`
+- primerno konfiguriraj krmilnik
+- ustvarjaj
